@@ -362,7 +362,7 @@ Blockly.Xml.domToBlock = function(xmlBlock, workspace) {
       for (var i = blocks.length - 1; i >= 0; i--) {
         blocks[i].render(false);
       }
-      // Populating the connection database may be defered until after the
+      // Populating the connection database may be deferred until after the
       // blocks have rendered.
       setTimeout(function() {
         if (topBlock.workspace) {  // Check that the block hasn't been deleted.
@@ -432,7 +432,7 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
         if (block.domToMutation) {
           block.domToMutation(xmlChild);
           if (block.initSvg) {
-            // Mutation may have added some elements that need initalizing.
+            // Mutation may have added some elements that need initializing.
             block.initSvg();
           }
         }
@@ -549,6 +549,9 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
       goog.asserts.assert(child.isShadow(),
                           'Shadow block not allowed non-shadow child.');
     }
+    // Ensure this block doesn't have any variable inputs.
+    goog.asserts.assert(block.getVars().length == 0,
+        'Shadow blocks cannot have variable fields.');
     block.setShadow(true);
   }
   return block;

@@ -84,9 +84,10 @@ Blockly.Css.inject = function(hasCss, pathToMedia) {
   // Strip off any trailing slash (either Unix or Windows).
   Blockly.Css.mediaPath_ = pathToMedia.replace(/[\\\/]$/, '');
   text = text.replace(/<<<PATH>>>/g, Blockly.Css.mediaPath_);
-  // Inject CSS tag.
+  // Inject CSS tag at start of head.
   var cssNode = document.createElement('style');
-  document.head.appendChild(cssNode);
+  document.head.insertBefore(cssNode, document.head.firstChild);
+
   var cssTextNode = document.createTextNode(text);
   cssNode.appendChild(cssTextNode);
   Blockly.Css.styleSheet_ = cssNode.sheet;
@@ -135,6 +136,7 @@ Blockly.Css.CONTENT = [
     'background-color: #fff;',
     'outline: none;',
     'overflow: hidden;',  /* IE overflows by default. */
+    'position: absolute;',
     'display: block;',
   '}',
 
@@ -165,11 +167,7 @@ Blockly.Css.CONTENT = [
     'right: 0;',
     'bottom: 0;',
     'overflow: visible !important;',
-    'z-index: 50;', /* Display below toolbox, but everything else. */
-    '-webkit-backface-visibility: hidden;',
-    'backface-visibility: hidden;',
-    '-webkit-perspective: 1000;',
-    'perspective: 1000;',
+    'z-index: 50;', /* Display below toolbox, but above everything else. */
   '}',
 
   '.blocklyTooltipDiv {',
@@ -273,6 +271,10 @@ Blockly.Css.CONTENT = [
     'fill: #000;',
   '}',
 
+  '.blocklyFlyout {',
+    'position: absolute;',
+    'z-index: 20;',
+  '}',
   '.blocklyFlyoutButton {',
     'fill: #888;',
     'cursor: default;',
@@ -296,10 +298,6 @@ Blockly.Css.CONTENT = [
 
   '.blocklyFlyoutLabelText {',
     'fill: #000;',
-  '}',
-
-  '.blocklyFlyoutLabelText:hover {',
-    'fill: #aaa;',
   '}',
 
   /*
@@ -378,6 +376,12 @@ Blockly.Css.CONTENT = [
   '.blocklyFlyoutBackground {',
     'fill: #ddd;',
     'fill-opacity: .8;',
+  '}',
+
+  '.blocklyScrollbarHorizontal, .blocklyScrollbarVertical {',
+    'position: absolute;',
+    'outline: none;',
+    'z-index: 30;',
   '}',
 
   '.blocklyScrollbarBackground {',

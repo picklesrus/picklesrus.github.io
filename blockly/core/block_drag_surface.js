@@ -19,7 +19,11 @@
  */
 
 /**
- * @fileoverview Functions for injecting Blockly into a web page.
+ * @fileoverview A class that manages a surface for dragging blocks.  When a
+ * block drag is started, we move the block (and children) to a separate dom
+ * element that we move around using translate3d. At the end of the drag, the
+ * blocks are put back in into the svg they came from. This helps performance by
+ * avoiding repainting the entire svg on every mouse move while dragging blocks.
  * @author picklesrus
  */
 
@@ -32,11 +36,16 @@ goog.require('goog.math.Coordinate');
 
 
 /**
- * Class for a Drag Surface SVG.
+ * Class for a drag surface for the currently dragged block. This is a separate
+ * SVG that contains only the currently moving block, or nothing.
  * @param {!Element} container Containing element.
  * @constructor
  */
 Blockly.BlockDragSurfaceSvg = function(container) {
+  /**
+   * @type {!Element}
+   * @private
+   */
   this.container_ = container;
 };
 
@@ -48,7 +57,8 @@ Blockly.BlockDragSurfaceSvg = function(container) {
 Blockly.BlockDragSurfaceSvg.prototype.SVG_ = null;
 
 /**
- * SVG group inside the drag surface. This is where blocks are moved to.
+ * This is where blocks live while they are being dragged if the drag surface
+ * is enabled.
  * @type {Element}
  * @private
  */
@@ -76,19 +86,19 @@ Blockly.BlockDragSurfaceSvg.prototype.createDom = function() {
   if (this.SVG_) {
     return;  // Already created.
   }
-  this.SVG_ = Blockly.createSvgElement('svg', {
+  this.SVG_ = Blockly.utils.createSvgElement('svg', {
     'xmlns': Blockly.SVG_NS,
     'xmlns:html': Blockly.HTML_NS,
     'xmlns:xlink': 'http://www.w3.org/1999/xlink',
     'version': '1.1',
     'class': 'blocklyBlockDragSurface'
   }, this.container_);
-  this.dragGroup_ = Blockly.createSvgElement('g', {}, this.SVG_);
+  this.dragGroup_ = Blockly.utils.createSvgElement('g', {}, this.SVG_);
 };
 
 /**
  * Set the SVG blocks on the drag surface's group and show the surface.
- * Only one block should be on the drag surface at a time.
+ * Only one block group should be on the drag surface at a time.
  * @param {!Element} blocks Block or group of blocks to place on the drag
  * surface.
  */
@@ -101,17 +111,16 @@ Blockly.BlockDragSurfaceSvg.prototype.setBlocksAndShow = function(blocks) {
 };
 
 /**
- * Translate and scale the entire drag surface group to keep in sync with the workspace.
+ * Translate and scale the entire drag surface group to keep in sync with the
+ * workspace.
  * @param {number} x X translation
  * @param {number} y Y translation
  * @param {number} scale Scale of the group.
  */
 Blockly.BlockDragSurfaceSvg.prototype.translateAndScaleGroup = function(x, y, scale) {
   this.scale_ = scale;
-  // Force values to have two decimal points.
-  // This is a work-around to prevent a bug in Safari, where numbers close to 0
-  // are sometimes reported as something like "2.9842794901924208e-12".
-  // That is incompatible with translate3d, causing bugs.
+  // This is a work-around to prevent a the blocks from rendering
+  // fuzzy while they are being dragged on the drag surface.
   x = x.toFixed(0);
   y = y.toFixed(0);
   this.dragGroup_.setAttribute('transform', 'translate('+ x + ','+ y + ')' +
@@ -145,7 +154,7 @@ Blockly.BlockDragSurfaceSvg.prototype.translateSurface = function(x, y) {
  * @return {!goog.math.Coordinate} Current translation of the surface.
  */
 Blockly.BlockDragSurfaceSvg.prototype.getSurfaceTranslation = function() {
-  var xy = Blockly.getRelativeXY_(this.SVG_);
+  var xy = Blockly.utils.getRelativeXY(this.SVG_);
   return new goog.math.Coordinate(xy.x / this.scale_, xy.y / this.scale_);
 };
 
