@@ -143,7 +143,7 @@ Blockly.utils.getRelativeXY = function(element) {
       xy.x += parseFloat(styleComponents[1]);
       if (styleComponents[3]) {
         xy.y += parseFloat(styleComponents[3]);
-       }
+      }
     }
   }
   return xy;
@@ -152,7 +152,9 @@ Blockly.utils.getRelativeXY = function(element) {
 /**
  * Return the coordinates of the top-left corner of this element relative to
  * the div blockly was injected into. 
- * @param {!Element} element SVG element to find the coordinates of.
+ * @param {!Element} element SVG element to find the coordinates of. If this is
+ *     not a child of the div blockly was injected into, the behaviour is
+ *     undefined.
  * @return {!goog.math.Coordinate} Object with .x and .y properties.
  */
 Blockly.utils.getInjectionDivXY_ = function(element) {
