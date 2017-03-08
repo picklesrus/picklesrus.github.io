@@ -1374,14 +1374,14 @@ Blockly.WorkspaceSvg.prototype.markFocused = function() {
     // set focus there.
     
     // Blur whatever was focused (to handle Edge)
-    if (document.activeElement) {
-      document.activeElement.blur();
-    }
+     if (document.activeElement) {
+       document.activeElement.blur();
+     }
     
     try {
       // For chrome & firefox
       this.getParentSvg().focus();
-    } catch (e) {
+    }  catch (e) {
       // for IE 11.
       console.log('trying to focus parent svg');
       this.parentSvg().parentNode().focus();
