@@ -24,6 +24,10 @@
  */
 'use strict';
 
+/**
+ * @name Blockly.Css
+ * @namespace
+ */
 goog.provide('Blockly.Css');
 
 
@@ -312,7 +316,7 @@ Blockly.Css.CONTENT = [
     Don't allow users to select text.  It gets annoying when trying to
     drag a block and selected text moves instead.
   */
-  '.blocklySvg text {',
+  '.blocklySvg text, .blocklyBlockDragSurface text {',
     'user-select: none;',
     '-moz-user-select: none;',
     '-webkit-user-select: none;',
@@ -386,10 +390,17 @@ Blockly.Css.CONTENT = [
     'fill-opacity: .8;',
   '}',
 
+  '.blocklyMainWorkspaceScrollbar {',
+    'z-index: 20;',
+  '}',
+
+  '.blocklyFlyoutScrollbar {',
+    'z-index: 30;',
+  '}',
+
   '.blocklyScrollbarHorizontal, .blocklyScrollbarVertical {',
     'position: absolute;',
     'outline: none;',
-    'z-index: 30;',
   '}',
 
   '.blocklyScrollbarBackground {',
@@ -453,6 +464,7 @@ Blockly.Css.CONTENT = [
     'stroke: #f00;',
     'stroke-width: 2;',
     'stroke-linecap: round;',
+    'pointer-events: none;',
   '}',
 
   '.blocklyContextMenu {',
