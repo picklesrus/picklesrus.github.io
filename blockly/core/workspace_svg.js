@@ -685,7 +685,7 @@ Blockly.WorkspaceSvg.prototype.setupDragSurface = function() {
 
   // This can happen if the user starts a drag, mouses up outside of the
   // document where the mouseup listener is registered (e.g. outside of an
-  // iframe) and then moves the mouse back in the workspace.  On mobile and ff, 
+  // iframe) and then moves the mouse back in the workspace.  On mobile and ff,
   // we get the mouseup outside the frame. On chrome and safari desktop we do
   // not.
   if (this.isDragSurfaceActive_) {
@@ -1369,26 +1369,29 @@ Blockly.WorkspaceSvg.prototype.markFocused = function() {
     Blockly.mainWorkspace = this;
     // We call e.preventDefault in many event handlers which means we
     // need to explicitly grab focus (e.g from a textarea) because
-    // the browser will not do it for us.  IE doesn't support calling
-    // focus on SVG elements so we walk the dom up to the injectionDiv to
-    // set focus there.
-    
-    // Blur whatever was focused (to handle Edge)
-     if (document.activeElement) {
-       document.activeElement.blur();
-     }
-    
-    try {
-      // For chrome & firefox
-      this.getParentSvg().focus();
-    }  catch (e) {
-      // for IE 11.
-      console.log('trying to focus parent svg');
-      this.getParentSvg().parentNode.focus();
-    }
-    // if (this.getParentSvg().parentNode) {
-    //   this.getParentSvg().parentNode.focus();
-    // }
+    // the browser will not do it for us.  How to do this is browser dependant.
+    this.setBrowserFocus();
+  }
+};
+
+/**
+ * Set the workspace to have focus in the browser.
+ * @private
+ */
+Blockly.WorkspaceSvg.prototype.setBrowserFocus = function() {
+  // Blur whatever was focused since explcitly grabbing focus below does not
+  // work in Edge.
+  if (document.activeElement) {
+    document.activeElement.blur();
+  }
+  try {
+    // Focus the workspace SVG - this is for Chrome and Firefox.
+    this.getParentSvg().focus();
+  }  catch (e) {
+    // IE and Edge do not support focus on SVG elements. When that fails
+    // above, get the injectionDiv (the workspace's parent) and focus that
+    // instead.  This doesn't work in Chrome.
+    this.getParentSvg().parentNode.focus();
   }
 };
 
