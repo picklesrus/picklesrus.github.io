@@ -1384,7 +1384,7 @@ Blockly.WorkspaceSvg.prototype.markFocused = function() {
     }  catch (e) {
       // for IE 11.
       console.log('trying to focus parent svg');
-      this.parentSvg().parentNode().focus();
+      this.getParentSvg().parentNode.focus();
     }
     // if (this.getParentSvg().parentNode) {
     //   this.getParentSvg().parentNode.focus();
