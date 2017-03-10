@@ -66,6 +66,8 @@ Blockly.inject = function(container, opt_options) {
       workspaceDragSurface);
   Blockly.init_(workspace);
   Blockly.mainWorkspace = workspace;
+  Blockly.bindEventWithChecks_(svg, 'focus', workspace, function(e) {e.preventDefault();});
+
   Blockly.svgResize(workspace);
   return workspace;
 };
