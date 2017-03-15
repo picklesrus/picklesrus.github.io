@@ -433,7 +433,7 @@ Blockly.Xml.domToBlock = function(xmlBlock, workspace) {
           // Force a render on IE and Edge to get around the issue described in
           // Blockly.Field.getCachedWidth
           if (goog.userAgent.IE || goog.userAgent.EDGE) {
-            topBlock.render();
+//            topBlock.render();
           }
         }
       }, 1);
