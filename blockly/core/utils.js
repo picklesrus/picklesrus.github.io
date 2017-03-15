@@ -884,5 +884,4 @@ Blockly.utils.runAfterPageLoad = function(fn) {
  */
 Blockly.utils.setCssTransform = function(node, transform) {
   node.style['transform'] = transform;
-  node.style['-webkit-transform'] = transform;
 };
