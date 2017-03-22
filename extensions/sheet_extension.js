@@ -27,8 +27,9 @@ new (function() {
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['w', 'get sheet by url: %s', 'sheet_url'],
+            ['r', 'get sheet by url: %s', 'sheet_url'],
             ['r', 'get value from cell', 'cell_value'],
+            ['r', 'get range from %s to %s', 'A1', 'C3', cell_value],
         ]
     };
 
