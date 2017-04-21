@@ -210,7 +210,7 @@ Blockly.Css.CONTENT = [
 
   '.blocklyDraggable {',
     /* backup for browsers (e.g. IE11) that don't support grab */
-    'cursor: url("<<<PATH>>>/handopen.cur");',
+    'cursor: url("<<<PATH>>>/handopen.cur"), auto;',
     'cursor: grab;',
     'cursor: -webkit-grab;',
     'cursor: -moz-grab;',
@@ -218,7 +218,7 @@ Blockly.Css.CONTENT = [
 
    '.blocklyDragging {',
     /* backup for browsers (e.g. IE11) that don't support grab */
-    'cursor: url("<<<PATH>>>/handclosed.cur");',
+    'cursor: url("<<<PATH>>>/handclosed.cur"), auto;',
     'cursor: grabbing;',
     'cursor: -webkit-grabbing;',
     'cursor: -moz-grabbing;',
@@ -227,7 +227,7 @@ Blockly.Css.CONTENT = [
     https://bugzilla.mozilla.org/show_bug.cgi?id=771241 */
   '.blocklyDraggable:active {',
     /* backup for browsers (e.g. IE11) that don't support grab */
-    'cursor: url("<<<PATH>>>/handclosed.cur");',
+    'cursor: url("<<<PATH>>>/handclosed.cur"), auto;',
     'cursor: grabbing;',
     'cursor: -webkit-grabbing;',
     'cursor: -moz-grabbing;',
@@ -237,7 +237,7 @@ Blockly.Css.CONTENT = [
    */
   '.blocklyBlockDragSurface .blocklyDraggable {',
     /* backup for browsers (e.g. IE11) that don't support grab */
-    'cursor: url("<<<PATH>>>/handclosed.cur");',
+    'cursor: url("<<<PATH>>>/handclosed.cur"), auto;',
     'cursor: grabbing;',
     'cursor: -webkit-grabbing;',
     'cursor: -moz-grabbing;',
